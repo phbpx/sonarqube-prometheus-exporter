@@ -16,18 +16,6 @@
             <comments>A business-friendly OSS license</comments>
         </license>
     </licenses>
-    <developers>
-        <developer>
-            <name>Daniel Meiners</name>
-            <email>mail@dmeiners.de</email>
-        </developer>
-    </developers>
-    <issueManagement>
-        <url>https://github.com/dmeiners88/sonarqube-prometheus-exporter/issues</url>
-    </issueManagement>
-    <scm>
-        <url>https://github.com/dmeiners88/sonarqube-prometheus-exporter.git</url>
-    </scm>
 
     <name>SonarQube Prometheus Exporter</name>
     <description>Prometheus Exporter for SonarQube

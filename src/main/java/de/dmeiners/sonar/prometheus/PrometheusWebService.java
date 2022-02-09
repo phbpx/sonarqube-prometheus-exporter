@@ -33,22 +33,25 @@ public class PrometheusWebService implements WebService {
     private final Set<Metric<?>> enabledMetrics = new HashSet<>();
 
     static {
-
+        SUPPORTED_METRICS.add(CoreMetrics.NCLOC);
+        SUPPORTED_METRICS.add(CoreMetrics.CLASSES);
+        SUPPORTED_METRICS.add(CoreMetrics.FUNCTIONS);
+        SUPPORTED_METRICS.add(CoreMetrics.FILES);
         SUPPORTED_METRICS.add(CoreMetrics.BUGS);
         SUPPORTED_METRICS.add(CoreMetrics.VULNERABILITIES);
         SUPPORTED_METRICS.add(CoreMetrics.CODE_SMELLS);
-        SUPPORTED_METRICS.add(CoreMetrics.COVERAGE);
         SUPPORTED_METRICS.add(CoreMetrics.TECHNICAL_DEBT);
+        SUPPORTED_METRICS.add(CoreMetrics.COVERAGE);
+        SUPPORTED_METRICS.add(CoreMetrics.COMPLEXITY);
+        SUPPORTED_METRICS.add(CoreMetrics.PROJECTS);
     }
 
     public PrometheusWebService(Configuration configuration) {
-
         this.configuration = configuration;
     }
 
     @Override
     public void define(Context context) {
-
         updateEnabledMetrics();
         updateEnabledGauges();
 
@@ -57,7 +60,6 @@ public class PrometheusWebService implements WebService {
 
         controller.createAction("metrics")
             .setHandler((request, response) -> {
-
                 updateEnabledMetrics();
                 updateEnabledGauges();
 
@@ -74,7 +76,7 @@ public class PrometheusWebService implements WebService {
 
                             if (this.gauges.containsKey(measure.getMetric())) {
 
-                                this.gauges.get(measure.getMetric()).labels(project.getKey(), project.getName()).set(Double.valueOf(measure.getValue()));
+                                this.gauges.get(measure.getMetric()).labels(project.getKey(), project.getName()).set(Double.parseDouble(measure.getValue()));
                             }
                         });
                     });
@@ -89,7 +91,6 @@ public class PrometheusWebService implements WebService {
 
                     TextFormat.write004(writer, CollectorRegistry.defaultRegistry.metricFamilySamples());
                 }
-
             });
 
         controller.done();
